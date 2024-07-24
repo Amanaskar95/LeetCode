@@ -1,0 +1,33 @@
+import java.util.*;
+
+class Solution {
+    public int[] sortJumbled(int[] mapping, int[] nums) {
+         List<Integer> numList = new ArrayList<>();
+        for (int num : nums) {
+            numList.add(num);
+        }
+
+         Collections.sort(numList, new Comparator<Integer>() {
+            public int compare(Integer a, Integer b) {
+                int mappedA = mapValue(a, mapping);
+                int mappedB = mapValue(b, mapping);
+                return Integer.compare(mappedA, mappedB);
+            }
+        });
+
+         for (int i = 0; i < nums.length; i++) {
+            nums[i] = numList.get(i);
+        }
+
+        return nums;
+    }
+
+     private int mapValue(int num, int[] mapping) {
+        StringBuilder mapped = new StringBuilder();
+        String numStr = String.valueOf(num);
+        for (char digit : numStr.toCharArray()) {
+            mapped.append(mapping[digit - '0']);
+        }
+        return Integer.parseInt(mapped.toString());
+    }
+}
